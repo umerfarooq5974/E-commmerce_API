@@ -1,5 +1,5 @@
-import Cart from "../models/Cart";
-import Product from "../models/Product";
+import Cart from "../models/Cart.js";
+import Product from "../models/Product.js";
 
 const calculateTotal = (items) => items.reduce((s,it) => s + it.product.price * it.quantity, 0);
 
@@ -38,7 +38,7 @@ export const addToCart = async (req, res) =>{
     }
 }
 
-export const UpdateCartItem = async (req, res) => {
+export const updateCartItem = async (req, res) => {
     try{
         const { itemId, quantity} = req.body;
         const cart = await Cart.findOne({ user: req.user._id });
