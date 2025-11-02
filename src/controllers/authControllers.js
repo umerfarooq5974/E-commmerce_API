@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.js"
 
 const signToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN || "7d"});
+
 export const register = async (req, res) =>{
     try{
         const { name, email, password } = req.body;
@@ -25,7 +26,7 @@ export const login = async ( req, res ) =>{
         const { email, password } = req.body;
         if( !email || !password ) return res.status(400).json({ error: " Missing Credentials " });
         
-        const user = await User.findOne(email);
+        const user = await User.findOne({email});
         if(!user) return res.status(400).json({ error: "Invalid Credentials" });
 
         const match = await user.comparePassword(password);
